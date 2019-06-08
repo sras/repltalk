@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = "repltalk",
+    name = "pyrepltalk",
     description='Talk to REPLs from code editors',
     url='http://github.com/sras/repltalk',
     author='Sandeep.C.R',

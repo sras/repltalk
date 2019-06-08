@@ -4,7 +4,6 @@ import http.client
 import os
 import time
 
-
 def getport():
     try:
         return int(os.environ['ADAPTER_PORT'])
