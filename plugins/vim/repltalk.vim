@@ -47,3 +47,7 @@ function! REPLTalkIndicateActivity()
   hi StatusLine ctermfg=black guibg=black ctermbg=Brown guifg=orange
 endfunction
 
+command! REPLTalkIndicateError call REPLTalkIndicateError()
+command! REPLTalkIndicateWarnings call REPLTalkIndicateWarnings()
+command! REPLTalkIndicateSuccess call REPLTalkIndicateSuccess()
+command! REPLTalkIndicateActivity call REPLTalkIndicateActivity()
