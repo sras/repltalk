@@ -1,4 +1,4 @@
-function! ReplTalkCommand(command, port)
+function! REPLTalkCommand(command, port)
 try
 
 python3 << en
