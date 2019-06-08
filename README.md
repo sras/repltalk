@@ -62,79 +62,21 @@ For neovim the `NVIM_LISTEN_ADDRESS` environment variable should be set to pass 
 For vim, the editor should be started by passing the `--servername` argument. The same name
 should be passed to the adapter through environment variable `VIM_SERVERNAME`.
 
-Neovim and Vim adapters expects four vim functions pre-defined and available. The adapters call these functions to indicate command status in the editors. Thus you can choose what happens in your editor at each stage of the command. These functions are the following.
+This repo includes a Plugin that can be used for both nvim and vim. If you use `vim-plug`, you can add this plugin by the following configuration.
+
+```
+Plug 'sras/repltalk', { 'rtp': 'plugins/vim' }
+```
+
+Neovim and Vim adapters expects four vim commands pre-defined and available.
 
 ```
   REPLTalkIndicateError
-
   REPLTalkIndicateWarnings
-
   REPLTalkIndicateSuccess
-
   REPLTalkIndicateActivity
 ```
 
-A sample vim/neovim configuration that defines the above functions (changes status bar color to indicate status) and also sets the auto commands to send a
-reload command to the adapters can be seen below.
+The adapters call these functions to indicate command status in the editors.
+The vim/neovim plugin already define these commands to change the status bar color. If you want to overrride this behavior, you can redefine what these commands do from configuration placed in the [after](http://vimdoc.sourceforge.net/htmldoc/options.html#after-directory) directory. Thus you can choose what happens in your editor at each stage of the command. These functions are the following.
 
-```
-  function! REPLTalkCommand(command, port)
-  try
-
-  python3 << en
-  import vim
-  import json
-  import http.client
-  port = vim.eval("a:port")
-  conn = http.client.HTTPConnection("localhost:{}".format(port))
-  data = {'command': vim.eval("a:command")}
-  conn.request("POST", '/command', json.dumps(data), headers = {'Content-type': 'application/json'})
-  en
-  catch
-
-  python << en
-  import vim
-  import json
-  import httplib
-
-  port = vim.eval("a:port")
-  conn = httplib.HTTPConnection("localhost:{}".format(port))
-  data = {'command': vim.eval("a:command")}
-  conn.request("POST", '/command', json.dumps(data), headers = {'Content-type': 'application/json'})
-  en
-  endtry
-  endfunction
-
-  function! REPLTalkIndicateError()
-    hi StatusLine ctermfg=black guibg=black ctermbg=DarkRed guifg=#fc4242
-  endfunction
-
-  function! REPLTalkIndicateWarnings()
-    hi StatusLine ctermfg=black guibg=black ctermbg=gray guifg=#84ff56
-  endfunction
-
-  function! REPLTalkIndicateSuccess()
-    hi StatusLine ctermfg=black guibg=black ctermbg=white guifg=#087e3b
-  endfunction
-
-  function! REPLTalkIndicateActivity()
-    hi StatusLine ctermfg=black guibg=black ctermbg=Brown guifg=orange
-  endfunction
-
-  command! HLiveCompile call SetLiveCompile(1)
-  command! HNoLiveCompile call SetLiveCompile(0)
-
-  autocmd BufWritePost *.hs call ReloadHaskell()
-
-  function! SetLiveCompile(lc)
-    let g:live_compile = a:lc
-  endfunction
-
-  function! ReloadHaskell()
-    if exists("g:live_compile") && g:live_compile == 1
-      call REPLTalkCommand(":reload", 2097)
-    endif
-  endfunction
-```
-
-Call the `HLiveCompile` command and `HNoLiveCompile` commands to enable or disable auto reloading on file save.
