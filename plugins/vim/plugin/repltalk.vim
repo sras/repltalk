@@ -1,4 +1,4 @@
-function! g:replTalkCommand(command, port)
+function! ReplTalkCommand(command, port)
 try
 
 python3 << en
