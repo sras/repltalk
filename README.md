@@ -55,6 +55,8 @@ Editor interface is same as the the server interface. But adaptors may not send 
 
 ### Configuration for Vim and NeoVim
 
+The adapters for NeoVim and Vim indicate compilation status in editor and populate the quickfix list with errors or warnings.
+
 For neovim the `NVIM_LISTEN_ADDRESS` environment variable should be set to pass the neovim RPC port. If you are in a shell inside the neovim editor, this variable is probable set already by neovim. If not, you can get it by `:echo v:servername` from neovim.
 
 For vim, the editor should be started by passing the `--servername` argument. The same name
