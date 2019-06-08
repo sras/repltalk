@@ -19,21 +19,27 @@ def call_vim_function(fnc, nvim):
     except NvimError as e:
         print("Warning: No function {} defined in Neovim.".format(fnc))
 
+def call_vim_command(fnc, nvim):
+    try:
+        nvim.command(fnc)
+    except NvimError as e:
+        print("Warning: No command {} defined in Neovim.".format(fnc))
+
 nvim = get_nvim()
 
 class NVIM(baseadapter.BaseAdapter):
     def show_activity(self):
-        call_vim_function('REPLTalkIndicateActivity', nvim)
+        call_vim_command('REPLTalkIndicateActivity', nvim)
 
     def send_result(self, msg):
         try:
             elist = vim.build_error_list(msg['output'], vim.get_file_mapping())
             if len(msg['output']['errors']) > 0:
-                call_vim_function('REPLTalkIndicateError', nvim)
+                call_vim_command('REPLTalkIndicateError', nvim)
             elif len(msg['output']['warnings']) > 0:
-                call_vim_function('REPLTalkIndicateWarnings', nvim)
+                call_vim_command('REPLTalkIndicateWarnings', nvim)
             else:
-                call_vim_function('REPLTalkIndicateSuccess', nvim)
+                call_vim_command('REPLTalkIndicateSuccess', nvim)
             nvim.call('setqflist', [], 'r', {"items": elist, "title": "REPLTalk Error list"})
         except Exception as e:
             print("Caught exception {}".format(e))

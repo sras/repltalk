@@ -75,19 +75,23 @@ class VIM(baseadapter.BaseAdapter):
         self.connected_socket.sendall(json.dumps(["call", func, args]).encode('utf-8'))
         self.connected_socket.sendall(json.dumps(["redraw", ""]).encode('utf-8'))
 
+    def call_vim_command(self, func):
+        self.connected_socket.sendall(json.dumps([func]).encode('utf-8'))
+        self.connected_socket.sendall(json.dumps(["redraw", ""]).encode('utf-8'))
+
     def show_activity(self):
-        self.call_vim_function('REPLTalkIndicateActivity', [])
+        self.call_vim_command('REPLTalkIndicateActivity', [])
 
     def send_result(self, msg):
         print("Neovim send result")
         try:
             elist = build_error_list(msg['output'], get_file_mapping())
             if len(msg['output']['errors']) > 0:
-                self.call_vim_function('REPLTalkIndicateError', [])
+                self.call_vim_command('REPLTalkIndicateError', [])
             elif len(msg['output']['warnings']) > 0:
-                self.call_vim_function('REPLTalkIndicateWarnings', [])
+                self.call_vim_command('REPLTalkIndicateWarnings', [])
             else:
-                self.call_vim_function('REPLTalkIndicateSuccess', [])
+                self.call_vim_command('REPLTalkIndicateSuccess', [])
             self.call_vim_function('setqflist', [[], 'r', {"items": elist, "title": "REPLTalk Error list"}])
         except Exception as e:
             print("Caught exception {}".format(e))
