@@ -10,7 +10,7 @@ setup(
     version = "1.0.1",
     packages = ['repltalk', 'repltalk.servers', 'repltalk.adapters'],
     entry_points = {
-        "console_scripts":['haskell_server=repltalk.servers.haskell:main', 'nvim_adapter=repltalk.adapters.nvim:main', 'vim_adapter=repltalk.adapters.vim:main']
+        "console_scripts":['elm_server=repltalk.servers.elm:main', 'haskell_server=repltalk.servers.haskell:main', 'nvim_adapter=repltalk.adapters.nvim:main', 'vim_adapter=repltalk.adapters.vim:main']
     },
     install_requires=[ 'pexpect', 'bottle' ]
 )
