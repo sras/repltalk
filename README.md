@@ -53,7 +53,17 @@ error, the response would be `{'error': error-description }`. You should also in
 
 Editor interface is same as the the server interface. But adaptors may not send the response back to the incoming request, and may or may not directly communicate with the editors to pass the message to the user.
 
+### Editor configurations
+
+This repo includes for Neovim, vim and Visual Studio Code.
+
 ### Configuration for Vim and NeoVim
+
+The plugin for Neovim and vim is one and the same and can be included with the following configuration (vim-plug plugin manager).
+
+```
+Plug 'sras/repltalk', { 'rtp': 'plugins/vim' }
+```
 
 The adapters for NeoVim and Vim indicate compilation status in editor and populate the quickfix list with errors or warnings.
 
@@ -62,11 +72,6 @@ For neovim the `NVIM_LISTEN_ADDRESS` environment variable should be set to pass 
 For vim, the editor should be started by passing the `--servername` argument. The same name
 should be passed to the adapter through environment variable `VIM_SERVERNAME`.
 
-This repo includes a Plugin that can be used for both nvim and vim. If you use `vim-plug`, you can add this plugin by the following configuration.
-
-```
-Plug 'sras/repltalk', { 'rtp': 'plugins/vim' }
-```
 
 Neovim and Vim adapters expects four vim commands pre-defined and available.
 
@@ -80,3 +85,8 @@ Neovim and Vim adapters expects four vim commands pre-defined and available.
 The adapters call these functions to indicate command status in the editors.
 The vim/neovim plugin already define these commands to change the status bar color. If you want to overrride this behavior, you can redefine what these commands do from configuration placed in the [after](http://vimdoc.sourceforge.net/htmldoc/options.html#after-directory) directory. Thus you can choose what happens in your editor at each stage of the command. These functions are the following.
 
+You can see the plugin in action [here](https://youtu.be/iblExnkhy4s)
+
+### Visual Studio Code
+
+Please refer to [this doc](https://github.com/sras/repltalk/tree/master/plugins/vsc).
