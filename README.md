@@ -65,7 +65,14 @@ The plugin for Neovim and vim is one and the same and can be included with the f
 Plug 'sras/repltalk', { 'rtp': 'plugins/vim' }
 ```
 
-The adapters for NeoVim and Vim indicate compilation status in editor and populate the quickfix list with errors or warnings.
+The plugin exports a function `REPLTalkCommand` that can be used to send commands to the repl process. We can use this function to reload the modules on file save.
+Add this line to your vim/nvim configuration so that a reload command is sent to the repl when haskell source files are saved.
+
+```
+  autocmd BufWritePost *.hs call REPLTalkCommand(":reload", 2096)
+```
+
+In addition, the adapters for NeoVim and Vim indicate compilation status in editor and populate the quickfix list with errors or warnings.
 
 For neovim the `NVIM_LISTEN_ADDRESS` environment variable should be set to pass the neovim RPC port. If you are in a shell inside the neovim editor, this variable is probable set already by neovim. If not, you can get it by `:echo v:servername` from neovim.
 
@@ -82,7 +89,7 @@ Neovim and Vim adapters expects the following four vim commands pre-defined and 
   REPLTalkIndicateActivity
 ```
 
-The adapters call these functions to indicate command status in the editors.
+The adapters call these functions to indicate command status to the user in the editors.
 The vim/neovim plugin already define these commands to change the status bar color. If you want to overrride this behavior, you can redefine what these commands do from configuration placed in the [after](http://vimdoc.sourceforge.net/htmldoc/options.html#after-directory) directory. Thus you can choose what happens in your editor at each stage of the command.
 
 You can see the plugin in action [here](https://youtu.be/iblExnkhy4s)
