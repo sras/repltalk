@@ -63,7 +63,9 @@ For VIM the communication with adapter has to be set up differently. The editor 
 Once this is setup, the server and adapter can be started.
 
 ```
-  haskell_server & vim_adapter
+# vim --servername SERVER
+# export VIM_SERVERNAME=SERVER
+# haskell_server & vim_adapter
 ```
 
 You can see the plug-in in action [here](https://youtu.be/iblExnkhy4s)
