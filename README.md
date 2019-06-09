@@ -54,6 +54,8 @@ In addition, Neovim and Vim adapters expects the following four vim commands pre
 The adapters call these commands to indicate command status to the user in the editors.
 The vim/neovim plugin already define these commands to change the status bar color. If you want to override this behavior, you can redefine what these commands do from configuration placed in the [after](http://vimdoc.sourceforge.net/htmldoc/options.html#after-directory) directory. Thus you can choose what happens in your editor at each stage of the command.
 
+You can see the plug-in in action [here](https://youtu.be/iblExnkhy4s)
+
 ### For VIM
 
 For VIM the communication with adapter has to be set up differently. The editor should be started by passing the `--servername` argument. The same name should be passed to the adapter through environment variable `VIM_SERVERNAME`.
@@ -63,13 +65,15 @@ Once this is setup, the server and adapter can be started.
   haskell_server & vim_adapter
 ```
 
+You can see the plug-in in action [here](https://youtu.be/iblExnkhy4s)
+
 ### For Visual Studio Code
 
 The Visual Studio Code extension does not require an adapter since JavaScript has got native support for async calls. So if you are using VSC, the you only have to start the REPL server.
 
 Please refer to [this doc](https://github.com/sras/repltalk/tree/master/plugins/vsc).
 
-You can see the plug-in in action [here](https://youtu.be/iblExnkhy4s)
+A sample session can be seen [here](https://youtu.be/FgdxkvXk874).
 
 ### Port Numbers
 
