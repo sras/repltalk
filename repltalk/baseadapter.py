@@ -44,7 +44,6 @@ class BaseAdapter():
             try:
                 conn = http.client.HTTPConnection("localhost:{}".format(self.repl_port))
                 if data:
-                    print("Sending data {}".format(data))
                     conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
                 else:
                     conn.request("GET", path)

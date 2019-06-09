@@ -4,29 +4,11 @@ import os
 import re
 import json
 
-ansi_escape = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
-
-class FileMarker:
-    def __init__(self):
-        self.buffer = {}
-
-    def get_region(self, file_name, line_start, line_end):
-        line_start -= 1
-        try:
-            fcontent = self.buffer[file_name]
-        except KeyError:
-            with open(file_name, 'r') as fin:
-                fcontent = fin.readlines()
-                self.buffer[file_name] = fcontent
-
-        return ''.join(["   > {}: {}".format(y+1,x) for (x, y) in zip(fcontent[line_start:line_end], range(line_start, line_end)) ])
-
 def make_error_blocks(content):
     print(content)
     if len(content) == 0:
         return {"errors" : [], "warnings": []}
     else:
-        fm = FileMarker();
         try:
             items = []
             errors = json.loads(content)
