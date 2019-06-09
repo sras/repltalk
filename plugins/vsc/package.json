@@ -1,7 +1,7 @@
 {
 	"name": "repltalk-adapter",
 	"displayName": "repltalk-adapter",
-	"description": "Talk to repltalk language servers",
+	"description": "Talk to REPLs",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.35.0"
@@ -9,11 +9,17 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"*"
+	"activationEvents": [		
+		"onCommand:extension.repltalk"
 	],
 	"main": "./out/extension.js",
-	"contributes": {},
+	"contributes": {
+		"commands":[{
+			"command": "extension.repltalk",
+			"title": "Repl Talk"
+			}
+		]
+	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
