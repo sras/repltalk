@@ -73,7 +73,7 @@ For vim, the editor should be started by passing the `--servername` argument. Th
 should be passed to the adapter through environment variable `VIM_SERVERNAME`.
 
 
-Neovim and Vim adapters expects four vim commands pre-defined and available.
+Neovim and Vim adapters expects the following four vim commands pre-defined and available.
 
 ```
   REPLTalkIndicateError
@@ -83,7 +83,7 @@ Neovim and Vim adapters expects four vim commands pre-defined and available.
 ```
 
 The adapters call these functions to indicate command status in the editors.
-The vim/neovim plugin already define these commands to change the status bar color. If you want to overrride this behavior, you can redefine what these commands do from configuration placed in the [after](http://vimdoc.sourceforge.net/htmldoc/options.html#after-directory) directory. Thus you can choose what happens in your editor at each stage of the command. These functions are the following.
+The vim/neovim plugin already define these commands to change the status bar color. If you want to overrride this behavior, you can redefine what these commands do from configuration placed in the [after](http://vimdoc.sourceforge.net/htmldoc/options.html#after-directory) directory. Thus you can choose what happens in your editor at each stage of the command.
 
 You can see the plugin in action [here](https://youtu.be/iblExnkhy4s)
 
