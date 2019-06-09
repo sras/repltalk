@@ -2,6 +2,8 @@
 	"name": "repltalk-adapter",
 	"displayName": "repltalk-adapter",
 	"description": "Talk to REPLs",
+	"publisher": "Sandeep.C.R",
+	"repository": "https://github.com/sras/repltalk",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.35.0"
