@@ -37,7 +37,8 @@ then this variable will be preset by Neovim. If not, you can get it by `:echo v:
 After you set the `NVIM_LISTEN_ADDRESS` in your terminal, go to your project folder and start the server for your language and Neovim adapter. For example, if you are using Haskell, that would be.
 
 ```
-  haskell_server & nvim_adapter
+# export NVIM_LISTEN_ADDRESS=/tmp/nvimZiwKsm 
+# haskell_server & nvim_adapter
 ```
 
 Now, when you save .hs files in Neovim, you should see the GHCI process doing a reload. The adapter will populate the quickfix window and error list. You can open it in Neovim by using the `:copen` command.
