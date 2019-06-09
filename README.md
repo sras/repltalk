@@ -22,9 +22,9 @@ So if you are using Haskell with Neovim editor you can start the server and adap
   haskell_server & nvim_adapter
 ```
 
-The Visual Studio Code extension does not require an adapter so if you are using VSC, the you only have to start the REPL server.
-
 To kill it, just press Ctrl-C. Then use the `fg` command to bring the language server process to foreground, and you can kill it via Ctrl-C too.
+
+The Visual Studio Code extension does not require an adapter since Javascript has got native support for async calls. So if you are using VSC, the you only have to start the REPL server.
 
 ### Port Numbers
 
