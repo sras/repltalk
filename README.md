@@ -14,7 +14,7 @@ As of now, the following language Servers and Editor adapters are included.
 
 Langage Servers: Haskell as `haskell_server`
 
-Editor Adapters: Neovim as `neovim_adapter`, vim as `vim_adapter`
+Editor Adapters: Neovim as `neovim_adapter`, vim as `vim_adapter`. The adapter for Visual Studio Code is in the form of an Visual Studio Code extension.
 
 ### For Neovim
 
