@@ -34,7 +34,6 @@ def apply_file_map(path, file_map):
     else:
         return path
 
-
 def get_file_mapping():
     try:
         file_mapping = sys.argv[1]
@@ -83,7 +82,6 @@ class VIM(baseadapter.BaseAdapter):
         self.call_vim_command('REPLTalkIndicateActivity', [])
 
     def send_result(self, msg):
-        print("Neovim send result")
         try:
             elist = build_error_list(msg['output'], get_file_mapping())
             if len(msg['output']['errors']) > 0:
