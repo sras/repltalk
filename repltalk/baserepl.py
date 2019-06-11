@@ -73,7 +73,7 @@ class BaseRepl:
         raise NotImplementedError("Please Implement this method in sub class")
 
     def expect(self, prompt):
-        self.process.expect_exact([prompt])
+        self.process.expect_exact([prompt], timeout=None)
 
     def thread_callback(self, prompt, cmd, args):
         print("Starting REPL process with command: {}".format(' '.join([cmd] + args)))
