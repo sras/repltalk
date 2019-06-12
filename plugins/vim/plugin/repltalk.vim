@@ -1,31 +1,4 @@
-function! REPLTalkCommand(command, port)
-try
-
-python3 << en
-import vim
-import json
-import http.client
-port = vim.eval("a:port")
-data = {'command': vim.eval("a:command")}
-conn = http.client.HTTPConnection("localhost:{}".format(port))
-conn.request("POST", '/command', json.dumps(data), headers = {'Content-type': 'application/json'})
-en
-catch
-
-python << en
-import vim
-import json
-import httplib
-
-port = vim.eval("a:port")
-data = {'command': vim.eval("a:command")}
-conn = httplib.HTTPConnection("localhost:{}".format(port))
-conn.request("POST", '/command', json.dumps(data), headers = {'Content-type': 'application/json'})
-en
-endtry
-endfunction
-
-function! ProcessResponse(channel)	
+function! ProcessResponse(channel)
   let full_msg = ""
   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
     let full_msg = full_msg . ch_read(a:channel)
@@ -78,9 +51,12 @@ else:
 
 elist = build_error_list(msg['output'])
 setfqlist = vim.function('setqflist')
-setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
+setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"}  )
 
 en
 endfunction
-let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", "{\"command\":\":reload\"}", "http://localhost:2096/command"]
-call job_start(js, {'close_cb': 'ProcessResponse'})
+
+function REPLTalkCommand(command)
+  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", "{\"command\":\":reload\"}", "http://localhost:2096/command"]
+  call job_start(js, {'close_cb': 'ProcessResponse'})
+endfunc
