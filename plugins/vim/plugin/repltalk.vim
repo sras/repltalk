@@ -56,7 +56,7 @@ setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"}  )
 en
 endfunction
 
-function REPLTalkCommand(command)
-  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", "{\"command\":\":reload\"}", "http://localhost:2096/command"]
+function REPLTalkCommand(command, port)
+  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://localhost:".string(a:port)."/command"]
   call job_start(js, {'close_cb': 'ProcessResponse'})
 endfunc
