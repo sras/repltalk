@@ -68,13 +68,14 @@ class ReplTalk(object):
             elist = build_error_list(msg['output'])
             self.vim.funcs.setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
 
-    @neovim.command('Cmd', range='', nargs='*', sync=True)
+    @neovim.command('REPLTalkCommand', range='', nargs='*', sync=False)
     def command_handler(self, args, range):
-        self._increment_calls()
-        self.vim.current.line = (
-            'Command: Called %d times, args: %s, range: %s' % (self.calls,
-                                                               args,
-                                                               range))
+        r = self.repl_command(args[0])
+        if 'error' in r:
+            if r['error'] == 'NOT_STARTED':
+                self.process_output(self.send_req('/start'))
+        else:
+            self.process_output(r)
 
     @neovim.autocmd('BufWritePost', pattern='*', sync=False)
     def autocmd_handler(self):
