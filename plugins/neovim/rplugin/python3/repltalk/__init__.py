@@ -69,7 +69,7 @@ class ReplTalk(object):
             self.vim.funcs.setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
 
     @neovim.function('REPLTalkCommand', sync=False)
-    def command_handler(self, args, range):
+    def command_handler(self, args):
         r = self.repl_command(args[0])
         if 'error' in r:
             if r['error'] == 'NOT_STARTED':
