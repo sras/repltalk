@@ -46,7 +46,7 @@ class BaseRepl:
                 self.status = Status.WAITING_COMMAND
                 return command_response(self.get_output())
             else:
-                return command_error("Already started")
+                return command_error("CANNOT_RESTART")
 
         @route('/stop')
         def stop_handler():
@@ -63,7 +63,7 @@ class BaseRepl:
                 self.status = Status.WAITING_COMMAND
                 return command_response(self.get_output())
             elif self.status == Status.NOT_STARTED:
-                return command_error('Repl process is not running!')
+                return command_error('NOT_STARTED')
         run(host=host, port=getport())
 
     def get_output(self):
