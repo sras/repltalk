@@ -41,7 +41,7 @@ class ReplTalk(object):
     def send_req(self, path, data = None):
         while True:
             try:
-                conn = http.client.HTTPConnection("localhost:{}".format(self.repl_port))
+                conn = http.client.HTTPConnection("localhost:{}".format(2096))
                 if data:
                     conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
                 else:
