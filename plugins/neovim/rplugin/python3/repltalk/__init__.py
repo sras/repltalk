@@ -68,7 +68,7 @@ class ReplTalk(object):
             elist = build_error_list(msg['output'])
             self.vim.funcs.setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
 
-    @neovim.command('REPLTalkCommand', range='', nargs='*', sync=False)
+    @neovim.function('REPLTalkCommand', sync=False)
     def command_handler(self, args, range):
         r = self.repl_command(args[0])
         if 'error' in r:
@@ -76,21 +76,3 @@ class ReplTalk(object):
                 self.process_output(self.send_req('/start'))
         else:
             self.process_output(r)
-
-    @neovim.autocmd('BufWritePost', pattern='*', sync=False)
-    def autocmd_handler(self):
-        r = self.repl_command(":reload")
-        if 'error' in r:
-            if r['error'] == 'NOT_STARTED':
-                self.process_output(self.send_req('/start'))
-        else:
-            self.process_output(r)
-        #self.vim.command("echo 123")
-        #self.vim.funcs.setqflist([], 'r')
-
-    @neovim.function('Func')
-    def function_handler(self, args):
-        pass
-
-    def _increment_calls(self):
-        pass
