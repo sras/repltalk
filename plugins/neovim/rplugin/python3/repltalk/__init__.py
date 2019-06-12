@@ -36,13 +36,13 @@ class ReplTalk(object):
     def __init__(self, vim):
         self.vim = vim
 
-    def repl_command(self, command):
-        return self.send_req("/command", {'command': command})
+    def repl_command(self, command, port):
+        return self.send_req(port, "/command", {'command': command})
 
-    def send_req(self, path, data = None):
+    def send_req(self, port, path, data = None):
         while True:
             try:
-                conn = http.client.HTTPConnection("localhost:{}".format(2096))
+                conn = http.client.HTTPConnection("localhost:{}".format(port))
                 if data:
                     conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
                 else:
@@ -73,6 +73,6 @@ class ReplTalk(object):
         r = self.repl_command(args[0])
         if 'error' in r:
             if r['error'] == 'NOT_STARTED':
-                self.process_output(self.send_req('/start'))
+                self.process_output(self.send_req(args[1], '/start'))
         else:
             self.process_output(r)
