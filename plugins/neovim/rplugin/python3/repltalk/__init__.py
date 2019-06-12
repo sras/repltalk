@@ -51,7 +51,7 @@ class ReplTalk(object):
             except:
                 print("Connection error, retrying after 1 sec")
                 time.sleep(1)
-                raise
+                pass
         res = conn.getresponse()
         return json.loads(res.read())
 
@@ -79,7 +79,6 @@ class ReplTalk(object):
     @neovim.autocmd('BufWritePost', pattern='*', sync=False)
     def autocmd_handler(self):
         r = self.repl_command(":reload")
-        raise Exception(str(r))
         if 'error' in r:
             if r['error'] == 'NOT_STARTED':
                 self.process_output(self.send_req('/start'))
