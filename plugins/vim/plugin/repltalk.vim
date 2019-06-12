@@ -8,7 +8,6 @@ import json
 import vim
 
 def parse_result(resp):
-  print(resp)
   return json.loads(resp)
 
 def build_error_list(items, file_map=None):
@@ -40,7 +39,6 @@ def apply_file_map(path, file_map):
         return path
 
 msg = parse_result(vim.eval("full_msg"))
-print(msg)
 
 if len(msg['output']['errors']) > 0:
     vim.command('REPLTalkIndicateError')
@@ -52,7 +50,6 @@ else:
 elist = build_error_list(msg['output'])
 setfqlist = vim.Function('setqflist')
 setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"}  )
-
 en
 endfunction
 
