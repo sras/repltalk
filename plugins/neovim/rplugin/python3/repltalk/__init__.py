@@ -55,7 +55,7 @@ class ReplTalk(object):
         res = conn.getresponse()
         return json.loads(res.read())
 
-    def process_output(msg):
+    def process_output(self, msg):
         if 'error' in msg:
             print(msg['error'])
         else:
