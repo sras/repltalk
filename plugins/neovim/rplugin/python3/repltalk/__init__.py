@@ -66,8 +66,7 @@ class ReplTalk(object):
             else:
                 self.vim.command('REPLTalkIndicateSuccess')
             elist = build_error_list(msg['output'])
-            raise Exception(str(elist))
-            self.vim.funcs.setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
+            self.vim.funcs.setqflist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
 
     @neovim.function('REPLTalkCommand', sync=False)
     def command_handler(self, args):
