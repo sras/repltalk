@@ -50,7 +50,7 @@ class ReplTalk(object):
             except:
                 print("Connection error, retrying after 1 sec")
                 time.sleep(1)
-                pass
+                raise
         res = conn.getresponse()
         return json.loads(res.read())
 
@@ -83,7 +83,6 @@ class ReplTalk(object):
                 self.process_output(self.send_req('/start'))
         else:
             self.process_output(r)
-
         #self.vim.command("echo 123")
         #self.vim.funcs.setqflist([], 'r')
 
