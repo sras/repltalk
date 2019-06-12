@@ -70,7 +70,7 @@ class ReplTalk(object):
 
     @neovim.function('REPLTalkCommand', sync=False)
     def command_handler(self, args):
-        r = self.repl_command(args[0])
+        r = self.repl_command(args[0], args[1])
         if 'error' in r:
             if r['error'] == 'NOT_STARTED':
                 self.process_output(self.send_req(args[1], '/start'))
