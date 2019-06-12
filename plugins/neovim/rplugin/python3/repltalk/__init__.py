@@ -79,6 +79,7 @@ class ReplTalk(object):
     @neovim.autocmd('BufWritePost', pattern='*', sync=False)
     def autocmd_handler(self):
         r = self.repl_command(":reload")
+        raise Exception(str(r))
         if 'error' in r:
             if r['error'] == 'NOT_STARTED':
                 self.process_output(self.send_req('/start'))
