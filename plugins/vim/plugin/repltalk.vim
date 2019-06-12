@@ -60,3 +60,24 @@ function REPLTalkCommand(command, port)
   let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://localhost:".string(a:port)."/command"]
   call job_start(js, {'close_cb': 'ProcessResponse'})
 endfunc
+
+function! REPLTalkIndicateError()
+  hi StatusLine ctermfg=black guibg=black ctermbg=DarkRed guifg=#fc4242
+endfunction
+
+function! REPLTalkIndicateWarnings()
+  hi StatusLine ctermfg=black guibg=black ctermbg=gray guifg=#84ff56
+endfunction
+
+function! REPLTalkIndicateSuccess()
+  hi StatusLine ctermfg=black guibg=black ctermbg=white guifg=#087e3b
+endfunction
+
+function! REPLTalkIndicateActivity()
+  hi StatusLine ctermfg=black guibg=black ctermbg=Brown guifg=orange
+endfunction
+
+command! REPLTalkIndicateError call REPLTalkIndicateError()
+command! REPLTalkIndicateWarnings call REPLTalkIndicateWarnings()
+command! REPLTalkIndicateSuccess call REPLTalkIndicateSuccess()
+command! REPLTalkIndicateActivity call REPLTalkIndicateActivity()
