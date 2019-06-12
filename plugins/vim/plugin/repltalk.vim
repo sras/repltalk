@@ -50,7 +50,7 @@ else:
     vim.command('REPLTalkIndicateSuccess')
 
 elist = build_error_list(msg['output'])
-setfqlist = vim.function('setqflist')
+setfqlist = vim.Function('setqflist')
 setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"}  )
 
 en
