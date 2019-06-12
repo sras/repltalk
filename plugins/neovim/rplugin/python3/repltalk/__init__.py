@@ -80,7 +80,7 @@ class ReplTalk(object):
     def autocmd_handler(self):
         r = self.repl_command(":reload")
         if 'error' in r:
-            if r.error == 'NOT_STARTED':
+            if r['error'] == 'NOT_STARTED':
                 self.process_output(self.send_req('/start'))
         else:
             self.process_output(r)
