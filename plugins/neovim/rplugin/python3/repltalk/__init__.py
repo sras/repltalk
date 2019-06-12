@@ -17,6 +17,7 @@ class Limit(object):
     @neovim.autocmd('BufWritePost', pattern='*', sync=True)
     def autocmd_handler(self):
         self.vim.command("echo 123")
+        self.vim.setqflist([], 'r', [])
 
     @neovim.function('Func')
     def function_handler(self, args):
