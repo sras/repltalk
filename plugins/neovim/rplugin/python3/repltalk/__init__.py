@@ -69,7 +69,7 @@ class ReplTalk(object):
                 file_map = self.vim.eval('g:REPLTALK_FILE_MAP')
             except:
                 file_map = None
-            elist = build_error_list(msg['output'], file_map = file_map)
+            elist = build_error_list(msg['output'], file_map=file_map)
             self.vim.funcs.setqflist([], 'r', {"items": elist, "title": "REPLTalk Error list"})
 
     @neovim.function('REPLTalkCommand', sync=False)
