@@ -14,20 +14,13 @@ class Limit(object):
                                                                args,
                                                                range))
 
-    @neovim.autocmd('BufEnter', pattern='*.py', eval='expand("<afile>")',
-                    sync=True)
-    def autocmd_handler(self, filename):
-        self._increment_calls()
-        self.vim.current.line = (
-            'Autocmd: Called %s times, file: %s' % (self.calls, filename))
+    @neovim.autocmd('BufWritePost', pattern='*', sync=True)
+    def autocmd_handler(self):
+        self.vim.command("echo 123")
 
     @neovim.function('Func')
     def function_handler(self, args):
-        self._increment_calls()
-        self.vim.current.line = (
-            'Function: Called %d times, args: %s' % (self.calls, args))
+        pass
 
     def _increment_calls(self):
-        if self.calls == 5:
-            raise Exception('Too many calls!')
-        self.calls += 1
+        pass
