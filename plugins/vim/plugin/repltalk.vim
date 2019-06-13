@@ -3,7 +3,7 @@ function! ProcessResponse(channel)
   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
     let full_msg = full_msg . ch_read(a:channel)
   endwhile
-python << en
+Py << en
 import json
 import vim
 
@@ -58,7 +58,7 @@ setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_ma
 en
 endfunction
 
-function REPLTalkCommand(command, port)
+function! REPLTalkCommand(command, port)
   let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://localhost:".string(a:port)."/command"]
   call job_start(js, {'close_cb': 'ProcessResponse'})
 endfunc
@@ -78,6 +78,20 @@ endfunction
 function! REPLTalkIndicateActivity()
   hi StatusLine ctermfg=black guibg=black ctermbg=Brown guifg=orange
 endfunction
+
+try
+  if has('python')
+    command! -nargs=* Py python <args>
+  endif
+catch
+endtry
+
+try
+  if has('python3')
+    command! -nargs=* Py python3 <args>
+  endif
+catch
+endtry
 
 command! REPLTalkIndicateError call REPLTalkIndicateError()
 command! REPLTalkIndicateWarnings call REPLTalkIndicateWarnings()
