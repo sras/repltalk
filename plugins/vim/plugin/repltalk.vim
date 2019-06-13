@@ -43,7 +43,7 @@ msg = parse_result(vim.eval("full_msg"))
 if 'error' in msg:
   if msg['error'] == 'NOT_STARTED':
     print("Not started")
-else if 'output' in msg:
+elif 'output' in msg:
   if len(msg['output']['errors']) > 0:
       vim.command('REPLTalkIndicateError')
   elif len(msg['output']['warnings']) > 0:
@@ -63,8 +63,8 @@ en
 endfunction
 
 function! REPLTalkCommand(command, host, port)
-  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://".string(a:host).":".string(a:port)."/command"]
-  call job_start(js, {'close_cb': 'ProcessResponse'}})
+  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://".a:host.":".string(a:port)."/command"]
+  call job_start(js, {'close_cb': 'ProcessResponse'})
 endfunc
 
 function! REPLTalkIndicateError()
