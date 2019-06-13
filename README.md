@@ -10,23 +10,26 @@ pip3 install pyrepltalk
 
 #### Starting the server
 
-We will use the Haskell server here.
-
-Open a terminal, and from your project folder, run
+We will use the Haskell server here.  Open a terminal, and from your project folder, run
 
 ```
 haskell_server
 ```
 
-This starts the server at the default port 2096. If you want to use a different port
-specify it using the `LANGUAGE_SERVER_PORT` environment variable before running the server.
-Any arguments that you pass to `haskell_server` will be forwarded to wrapped REPL process.
+This starts the server at the default port 2096. The REPL process is not started until the `/start` endpoint is called.
+If you want to use a different port, specify it using the `LANGUAGE_SERVER_PORT` environment variable before running the server.
+Any arguments that you pass to `haskell_server` will be forwarded to the wrapped REPL process.
 
-```
-
-```
 
 ### Editor Plugins
+
+The Neovim and vim plugins provide a "REPLTalkCommand" function that you can use to send commands to the wrapped REPL process. The results will be fetched and processed asynchronously.
+For example, to run a `:reload` command when saving Haskell files, you can set the following auto command.
+
+
+```
+  autocmd BufWritePost *.hs call REPLTalkCommand(":reload", 2096)
+```
 
 #### Neovim
 
@@ -44,7 +47,7 @@ After running `PlugInstall` restart the editor.
 Plug 'sras/repltalk', { 'rtp': 'plugins/vim'}
 ```
 
-Plugin should be usable after running `PlugInstall`.
+After running `PlugInstall` restart the editor.
 
 ### Visual Studio Code
 
@@ -60,7 +63,6 @@ Then change directory to `plugins/vsc` folder in this repo and run `vsce package
 cd plugins/vsc
 vsce package
 ```
-
 
 This will create a .vsix extension file that you can install from Visual Studio Code's user interface by selecting the "Install extension from vsix file" option from extensions menu.
 
