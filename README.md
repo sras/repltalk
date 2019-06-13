@@ -51,6 +51,8 @@ After running `PlugInstall` restart the editor.
 
 ### Visual Studio Code
 
+##### Building the extension
+
 First install the `vsce` tool.
 
 ```

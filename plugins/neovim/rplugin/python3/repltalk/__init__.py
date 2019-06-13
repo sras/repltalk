@@ -36,13 +36,13 @@ class ReplTalk(object):
     def __init__(self, vim):
         self.vim = vim
 
-    def repl_command(self, command, port):
-        return self.send_req(port, "/command", {'command': command})
+    def repl_command(self, command, host, port):
+        return self.send_req(host, port, "/command", {'command': command})
 
-    def send_req(self, port, path, data = None):
+    def send_req(self, host, port, path, data = None):
         while True:
             try:
-                conn = http.client.HTTPConnection("localhost:{}".format(port))
+                conn = http.client.HTTPConnection("{}:{}".format(host, port))
                 if data:
                     conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
                 else:
@@ -74,9 +74,10 @@ class ReplTalk(object):
 
     @neovim.function('REPLTalkCommand', sync=False)
     def command_handler(self, args):
-        r = self.repl_command(args[0], args[1])
+        r = self.repl_command(args[0], args[1], args[2])
         if 'error' in r:
             if r['error'] == 'NOT_STARTED':
-                self.process_output(self.send_req(args[1], '/start'))
+                self.process_output(self.send_req(args[1], args[2], '/start'))
+                self.command_handler(args)
         else:
             self.process_output(r)
