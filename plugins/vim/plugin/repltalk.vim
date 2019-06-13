@@ -1,4 +1,4 @@
-function! ProcessResponse(channel)
+function! ProcessResponse(channel, command, host, port)
   let full_msg = ""
   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
     let full_msg = full_msg . ch_read(a:channel)
@@ -42,7 +42,9 @@ msg = parse_result(vim.eval("full_msg"))
 
 if 'error' in msg:
   if msg['error'] == 'NOT_STARTED':
-    print("Not started")
+    print("REPL process not started, starting up...")
+    startup = vim.Function('REPLTalkStart')
+    startup(vim.eval('a:command'), vim.eval('a:host'), vim.eval('a:port'))
 elif 'output' in msg:
   if len(msg['output']['errors']) > 0:
       vim.command('REPLTalkIndicateError')
@@ -62,9 +64,14 @@ elif 'output' in msg:
 en
 endfunction
 
+function! REPLTalkStart(command, host, port)
+  let js = ["curl", "http://".a:host.":".a:port."/start"]
+  call job_start(js, {'close_cb':  {c -> ProcessResponse(c, a:command, a:host, a:port)}})
+endfunc
+
 function! REPLTalkCommand(command, host, port)
   let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://".a:host.":".string(a:port)."/command"]
-  call job_start(js, {'close_cb': 'ProcessResponse'})
+  call job_start(js, {'close_cb': {c -> ProcessResponse(c, a:command, a:host, a:port)}})
 endfunc
 
 function! REPLTalkIndicateError()
