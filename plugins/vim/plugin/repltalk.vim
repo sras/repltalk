@@ -54,7 +54,7 @@ except:
 
 elist = build_error_list(msg['output'], file_map=file_map)
 setfqlist = vim.Function('setqflist')
-setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"}  )
+setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_map)}  )
 en
 endfunction
 
