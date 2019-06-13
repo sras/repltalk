@@ -47,9 +47,14 @@ elif len(msg['output']['warnings']) > 0:
 else:
     vim.command('REPLTalkIndicateSuccess')
 
-elist = build_error_list(msg['output'])
+try:
+    file_map = vim.eval('g:REPLTALK_FILE_MAP')
+except:
+    file_map = None
+
+elist = build_error_list(msg['output'], file_map=file_map)
 setfqlist = vim.Function('setqflist')
-setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list"}  )
+setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_map)}  )
 en
 endfunction
 
