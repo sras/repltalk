@@ -73,11 +73,13 @@ endfunction
 function! REPLTalkStart(command, host, port)
   let js = ["curl", "http://".a:host.":".a:port."/start"]
   call job_start(js, {'close_cb':  {c -> ProcessResponse(c, a:command, a:host, a:port)}})
+  execute('REPLTalkIndicateActivity')
 endfunc
 
 function! REPLTalkCommand(command, host, port)
   let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://".a:host.":".string(a:port)."/command"]
   call job_start(js, {'close_cb': {c -> ProcessResponse(c, a:command, a:host, a:port)}})
+  execute('REPLTalkIndicateActivity')
 endfunc
 
 function! REPLTalkIndicateError()
