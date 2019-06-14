@@ -8,7 +8,10 @@ import json
 import vim
 
 def parse_result(resp):
-  return json.loads(resp)
+  try:
+    return json.loads(resp)
+  catch:
+    print("Error fetching server response. Did you start the RPELTalk server?")
 
 def build_error_list(items, file_map=None):
     ret = []

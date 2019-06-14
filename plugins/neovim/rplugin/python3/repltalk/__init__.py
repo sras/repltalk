@@ -40,18 +40,15 @@ class ReplTalk(object):
         return self.send_req(host, port, "/command", {'command': command})
 
     def send_req(self, host, port, path, data = None):
-        while True:
-            try:
-                conn = http.client.HTTPConnection("{}:{}".format(host, port))
-                if data:
-                    conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
-                else:
-                    conn.request("GET", path)
-                break
-            except:
-                print("Connection error, retrying after 1 sec")
-                time.sleep(1)
-                pass
+        try:
+            conn = http.client.HTTPConnection("{}:{}".format(host, port))
+            if data:
+                conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
+            else:
+                conn.request("GET", path)
+            break
+        except:
+            print("Connection error, please start the REPLTalk server")
         res = conn.getresponse()
         return json.loads(res.read())
 
