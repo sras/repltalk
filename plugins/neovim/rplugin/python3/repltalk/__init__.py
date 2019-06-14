@@ -46,7 +46,6 @@ class ReplTalk(object):
                 conn.request("POST", path, json.dumps(data), headers = {'Content-type': 'application/json'})
             else:
                 conn.request("GET", path)
-            break
             res = conn.getresponse()
             return json.loads(res.read())
         except:
