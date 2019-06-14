@@ -47,10 +47,10 @@ class ReplTalk(object):
             else:
                 conn.request("GET", path)
             break
+            res = conn.getresponse()
+            return json.loads(res.read())
         except:
             print("Connection error, please start the REPLTalk server")
-        res = conn.getresponse()
-        return json.loads(res.read())
 
     def process_output(self, msg):
         if 'error' in msg:
