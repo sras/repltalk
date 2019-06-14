@@ -69,11 +69,11 @@ class ReplTalk(object):
     def command_handler(self, args):
         try:
             r = self.repl_command(args[0], args[1], args[2])
+            if 'error' in r:
+                if r['error'] == 'NOT_STARTED':
+                    self.process_output(self.send_req(args[1], args[2], '/start'))
+                    self.command_handler(args)
+            else:
+                self.process_output(r)
         except:
             print("Connection/Decoding error, please start the REPLTalk server")
-        if 'error' in r:
-            if r['error'] == 'NOT_STARTED':
-                self.process_output(self.send_req(args[1], args[2], '/start'))
-                self.command_handler(args)
-        else:
-            self.process_output(r)
