@@ -10,7 +10,7 @@ import vim
 def parse_result(resp):
   try:
     return json.loads(resp)
-  catch:
+  except:
     print("Error fetching server response. Did you start the RPELTalk server?")
 
 def build_error_list(items, file_map=None):
@@ -41,29 +41,32 @@ def apply_file_map(path, file_map):
     else:
         return path
 
-msg = parse_result(vim.eval("full_msg"))
+try:
+  msg = parse_result(vim.eval("full_msg"))
 
-if 'error' in msg:
-  if msg['error'] == 'NOT_STARTED':
-    print("REPL process not started, starting up...")
-    startup = vim.Function('REPLTalkStart')
-    startup(vim.eval('a:command'), vim.eval('a:host'), vim.eval('a:port'))
-elif 'output' in msg:
-  if len(msg['output']['errors']) > 0:
-      vim.command('REPLTalkIndicateError')
-  elif len(msg['output']['warnings']) > 0:
-      vim.command('REPLTalkIndicateWarnings')
-  else:
-      vim.command('REPLTalkIndicateSuccess')
+  if 'error' in msg:
+    if msg['error'] == 'NOT_STARTED':
+      print("REPL process not started, starting up...")
+      startup = vim.Function('REPLTalkStart')
+      startup(vim.eval('a:command'), vim.eval('a:host'), vim.eval('a:port'))
+  elif 'output' in msg:
+    if len(msg['output']['errors']) > 0:
+        vim.command('REPLTalkIndicateError')
+    elif len(msg['output']['warnings']) > 0:
+        vim.command('REPLTalkIndicateWarnings')
+    else:
+        vim.command('REPLTalkIndicateSuccess')
 
-  try:
-      file_map = vim.eval('g:REPLTALK_FILE_MAP')
-  except:
-      file_map = None
+    try:
+        file_map = vim.eval('g:REPLTALK_FILE_MAP')
+    except:
+        file_map = None
 
-  elist = build_error_list(msg['output'], file_map=file_map)
-  setfqlist = vim.Function('setqflist')
-  setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_map)}  )
+    elist = build_error_list(msg['output'], file_map=file_map)
+    setfqlist = vim.Function('setqflist')
+    setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_map)}  )
+except:
+  pass
 en
 endfunction
 
