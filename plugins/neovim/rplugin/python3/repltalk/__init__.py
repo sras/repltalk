@@ -68,6 +68,7 @@ class ReplTalk(object):
     @neovim.function('REPLTalkCommand', sync=False)
     def command_handler(self, args):
         try:
+            self.vim.command('REPLTalkIndicateActivity')
             r = self.repl_command(args[0], args[1], args[2])
             if 'error' in r:
                 if r['error'] == 'NOT_STARTED':
