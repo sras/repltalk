@@ -1,4 +1,4 @@
-function! ProcessResponse(channel)
+function! ProcessResponse(channel, command, host, port)
   let full_msg = ""
   while ch_status(a:channel, {'part': 'out'}) == 'buffered'
     let full_msg = full_msg . ch_read(a:channel)
@@ -40,27 +40,38 @@ def apply_file_map(path, file_map):
 
 msg = parse_result(vim.eval("full_msg"))
 
-if len(msg['output']['errors']) > 0:
-    vim.command('REPLTalkIndicateError')
-elif len(msg['output']['warnings']) > 0:
-    vim.command('REPLTalkIndicateWarnings')
-else:
-    vim.command('REPLTalkIndicateSuccess')
+if 'error' in msg:
+  if msg['error'] == 'NOT_STARTED':
+    print("REPL process not started, starting up...")
+    startup = vim.Function('REPLTalkStart')
+    startup(vim.eval('a:command'), vim.eval('a:host'), vim.eval('a:port'))
+elif 'output' in msg:
+  if len(msg['output']['errors']) > 0:
+      vim.command('REPLTalkIndicateError')
+  elif len(msg['output']['warnings']) > 0:
+      vim.command('REPLTalkIndicateWarnings')
+  else:
+      vim.command('REPLTalkIndicateSuccess')
 
-try:
-    file_map = vim.eval('g:REPLTALK_FILE_MAP')
-except:
-    file_map = None
+  try:
+      file_map = vim.eval('g:REPLTALK_FILE_MAP')
+  except:
+      file_map = None
 
-elist = build_error_list(msg['output'], file_map=file_map)
-setfqlist = vim.Function('setqflist')
-setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_map)}  )
+  elist = build_error_list(msg['output'], file_map=file_map)
+  setfqlist = vim.Function('setqflist')
+  setfqlist([], 'r', {"items": elist, "title": "REPLTalk Error list" + str(file_map)}  )
 en
 endfunction
 
-function! REPLTalkCommand(command, port)
-  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://localhost:".string(a:port)."/command"]
-  call job_start(js, {'close_cb': 'ProcessResponse'})
+function! REPLTalkStart(command, host, port)
+  let js = ["curl", "http://".a:host.":".a:port."/start"]
+  call job_start(js, {'close_cb':  {c -> ProcessResponse(c, a:command, a:host, a:port)}})
+endfunc
+
+function! REPLTalkCommand(command, host, port)
+  let js = ["curl", "--header", "Content-Type: application/json", "--request", "POST","--data", json_encode({"command":a:command}),  "http://".a:host.":".string(a:port)."/command"]
+  call job_start(js, {'close_cb': {c -> ProcessResponse(c, a:command, a:host, a:port)}})
 endfunc
 
 function! REPLTalkIndicateError()
