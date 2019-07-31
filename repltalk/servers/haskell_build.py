@@ -10,4 +10,4 @@ class HaskellRunner(baserunner.BaseRunner):
         return haskell.make_error_blocks(content)
 
 def main():
-    HaskellRunner("stack", ['build'] + sys.argv[1:], 'localhost')
+    HaskellRunner(sys.argv[1], 'localhost')
