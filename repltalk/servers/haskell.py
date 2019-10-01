@@ -24,7 +24,7 @@ def make_error_blocks(content):
                     continue
                 type_ = type_.strip()
                 err_msg = "\n".join(lines[idx:])
-                full_item =  {'file_name': file_name, 'line': line, 'column' : column, 'text': err_msg }
+                full_item =  {'file_name': file_name.strip(), 'line': line, 'column' : column, 'text': err_msg }
                 if "error" in type_:
                     errors.append(full_item)
                 elif "warning" in type_:
