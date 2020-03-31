@@ -24,13 +24,19 @@ def make_error_blocks(content):
                     continue
                 type_ = type_.strip()
                 err_msg = "\n".join(lines[idx:])
-                full_item =  {'file_name': file_name.strip(), 'line': line, 'column' : column, 'text': err_msg }
+                full_item =  {'file_name': extract_filename(file_name.strip()), 'line': line, 'column' : column, 'text': err_msg.strip() }
                 if "error" in type_:
                     errors.append(full_item)
                 elif "warning" in type_:
                     warnings.append(full_item)
     return {"errors" : errors, "warnings": warnings}
 
+def extract_filename(fn):
+    fsi = fn.find('>')
+    if fsi == -1:
+        return fn
+    else:
+        return fn[(fsi+1):].strip()
 
 class GHCIRepl(baserepl.BaseRepl):
     def process_output(self, content):
