@@ -6,6 +6,12 @@ import re
 
 ansi_escape = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
 
+try:
+    append_prefix = os.environ['REPLTALK_APPEND_PREFIX']
+except:
+    append_prefix = ''
+
+
 def make_error_blocks(content):
     content = ansi_escape.sub('', content)
     errors = []
@@ -24,7 +30,7 @@ def make_error_blocks(content):
                     continue
                 type_ = type_.strip()
                 err_msg = "\n".join(lines[idx:])
-                full_item =  {'file_name': extract_filename(file_name.strip()), 'line': line, 'column' : column, 'text': err_msg.strip() }
+                full_item =  {'file_name': append_prefix + extract_filename(file_name.strip()), 'line': line, 'column' : column, 'text': err_msg.strip() }
                 if "error" in type_:
                     errors.append(full_item)
                 elif "warning" in type_:
