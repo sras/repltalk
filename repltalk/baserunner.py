@@ -29,7 +29,7 @@ class Status(Enum):
     RUNNING = 2
 
 class BaseRunner:
-    def __init__(self, cmd, args, host):
+    def __init__(self, cmd, host):
 
         port = getport()
         self.status = Status.WAITING_COMMAND
@@ -46,12 +46,13 @@ class BaseRunner:
         def run_handler():
             if self.status == Status.WAITING_COMMAND:
                 self.status = Status.RUNNING
-                result = subprocess.run([cmd]+args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                print("Starting process...")
+                result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 error_ = result.stderr.decode()
                 output_ = result.stdout.decode()
                 self.status = Status.WAITING_COMMAND
                 if len(error_) > 0:
-                    return command_response(self.process_output(error_))
+                    return command_response(self.process_output(output_ + error_))
                 else:
                     return command_response(self.process_output(output_))
             else:
