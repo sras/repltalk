@@ -51,6 +51,10 @@ class BaseRunner:
                 error_ = result.stderr.decode()
                 output_ = result.stdout.decode()
                 self.status = Status.WAITING_COMMAND
+                print("Errors:")
+                print(error_)
+                print("Output:")
+                print(output_)
                 if len(error_) > 0:
                     return command_response(self.process_output(output_ + error_))
                 else:
