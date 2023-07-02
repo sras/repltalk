@@ -13,7 +13,11 @@ setup(
         "console_scripts":['elm18_server=repltalk.servers.elm18:main',
             'elm_server=repltalk.servers.elm:main',
             'typescript_watcher=repltalk.servers.typescript:main',
-            'haskell_watcher=repltalk.servers.haskell_build:main', 'haskell_server=repltalk.servers.haskell:main', 'nvim_adapter=repltalk.adapters.nvim:main', 'vim_adapter=repltalk.adapters.vim:main']
+            'haskell_watcher=repltalk.servers.haskell_build:main',
+            'rust_watcher=repltalk.servers.rust_build:main',
+            'haskell_server=repltalk.servers.haskell:main',
+            'nvim_adapter=repltalk.adapters.nvim:main',
+            'vim_adapter=repltalk.adapters.vim:main']
     },
     install_requires=[ 'pexpect', 'bottle' ]
 )
