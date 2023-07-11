@@ -8,6 +8,7 @@ ansi_escape = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
 
 try:
     append_prefix = os.environ['REPLTALK_APPEND_PREFIX']
+    print("{}={}".format("REPLTALK_APPEND_PREFIX", append_prefix));
 except:
     append_prefix = ''
 
@@ -54,4 +55,4 @@ def main():
     fo = os.fdopen(f, mode='w')
     fo.write(":set prompt {}".format(prompt))
     fo.close()
-    GHCIRepl(prompt, "stack", ["ghci", "--ghci-options=-ghci-script={}".format(fname)] + sys.argv[1:], 'localhost')
+    GHCIRepl(prompt, "./hadrian/ghci", ["-ghci-script={}".format(fname)] + sys.argv[1:], 'localhost')

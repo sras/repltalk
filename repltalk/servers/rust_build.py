@@ -6,6 +6,7 @@ import json
 
 try:
     append_prefix = os.environ['REPLTALK_APPEND_PREFIX']
+    print("{}={}".format("REPLTALK_APPEND_PREFIX", append_prefix));
 except:
     append_prefix = ''
 
