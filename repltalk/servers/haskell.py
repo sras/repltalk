@@ -55,4 +55,4 @@ def main():
     fo = os.fdopen(f, mode='w')
     fo.write(":set prompt {}".format(prompt))
     fo.close()
-    GHCIRepl(prompt, "./hadrian/ghci", ["-ghci-script={}".format(fname)] + sys.argv[1:], 'localhost')
+    GHCIRepl(prompt, "./hadrian/ghci", ["-ghci-script={}".format(fname)] + sys.argv[1:], '0.0.0.0')

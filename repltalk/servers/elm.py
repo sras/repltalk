@@ -37,4 +37,4 @@ class ElmRunner(baserunner.BaseRunner):
         return make_error_blocks(content)
 
 def main():
-    ElmRunner("elm", ["make", "--report", "json"] + sys.argv[1:], 'localhost')
+    ElmRunner("elm", ["make", "--report", "json"] + sys.argv[1:], '0.0.0.0')

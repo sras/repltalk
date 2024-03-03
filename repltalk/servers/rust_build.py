@@ -50,4 +50,4 @@ class RustRunner(baserunner.BaseRunner):
         return make_error_blocks(content)
 
 def main():
-    RustRunner(sys.argv[1].split(' '), 'localhost')
+    RustRunner(sys.argv[1].split(' '), '0.0.0.0')

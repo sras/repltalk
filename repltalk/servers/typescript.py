@@ -55,4 +55,4 @@ class TypescriptRunner(baserunner.BaseRunner):
         return make_error_blocks(content)
 
 def main():
-    TypescriptRunner(sys.argv[1].split(' '), 'localhost')
+    TypescriptRunner(sys.argv[1].split(' '), '0.0.0.0')
