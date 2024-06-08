@@ -41,6 +41,12 @@ Plug 'sras/repltalk', { 'rtp': 'plugins/neovim', 'do': ':UpdateRemotePlugins' }
 
 After running `PlugInstall` restart the editor.
 
+Next you should use your init.vim to define what should happen if there is an
+error, warnings or a successful build. The python plugin just calls the
+commands `REPLTalkIndicateActivity`, `REPLTalkIndicateError`,
+`REPLTalkIndicateWarnings` or `REPLTalkIndicateSuccess`. If those commands are
+not defined, then it will cause an error.
+
 #### VIM
 
 ```
