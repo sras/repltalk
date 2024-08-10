@@ -22,12 +22,12 @@ def make_error_blocks(content):
             lines = b.strip().split("\n")
             lastline = None
             for idx, line in enumerate(lines):
+                line = line.strip()
                 try:
                     message = lastline
                     lastline = line
-                    print("Line: {}".format(line))
-                    if line.startswith(" -->"):
-                        (file_name, line, column) = line[5:].split(":")[0:3]
+                    if line.startswith("-->"):
+                        (file_name, line, column) = line[4:].split(":")[0:3]
                     else:
                         continue
                 except Exception as err :
