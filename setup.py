@@ -16,6 +16,7 @@ setup(
             'haskell_watcher=repltalk.servers.haskell_build:main',
             'rust_watcher=repltalk.servers.rust_build:main',
             'fun_c_watcher=repltalk.servers.fun_c_build:main',
+            'solidity_watcher=repltalk.servers.solidity:main',
             'haskell_server=repltalk.servers.haskell:main',
             'nvim_adapter=repltalk.adapters.nvim:main',
             'vim_adapter=repltalk.adapters.vim:main']
