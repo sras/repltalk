@@ -20,13 +20,17 @@ except:
 #{"file": "main.py", "line": 1, "column": 0, "message": "Module \"PyQt5\" has no attribute \"Qt\"", "hint": null, "code": "attr-defined", "severity": "error"}
 #'''
 
-def make_error_blocks(content):
+def make_error_blocks(c):
     errors = []
     warnings = []
+    content = c.strip()
     if content is not None and len(content) > 0:
-        blocks = content.strip().split("\n")
+        blocks = content.split("\n")
         for l in blocks:
-            b = json.loads(l)
+            try:
+                b = json.loads(l)
+            except:
+                continue
             if b["hint"]:
                 hint = b["hint"]
             else:
