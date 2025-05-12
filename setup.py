@@ -15,6 +15,7 @@ setup(
             'typescript_watcher=repltalk.servers.typescript:main',
             'haskell_watcher=repltalk.servers.haskell_build:main',
             'rust_watcher=repltalk.servers.rust_build:main',
+            'c_watcher=repltalk.servers.c_build:main',
             'fun_c_watcher=repltalk.servers.fun_c_build:main',
             'solidity_watcher=repltalk.servers.solidity:main',
             'python_watcher=repltalk.servers.python:main',
