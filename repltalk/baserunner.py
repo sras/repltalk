@@ -55,10 +55,13 @@ class BaseRunner:
                 print(error_)
                 print("Output:")
                 print(output_)
+                build_error = ""
+                if result.returncode != 0:
+                    build_error_ = "\nREPLTALK_BUILD_ERROR\n"
                 if len(error_) > 0:
-                    return command_response(self.process_output(output_ + error_))
+                    return command_response(self.process_output(output_ + error_ + build_error))
                 else:
-                    return command_response(self.process_output(output_))
+                    return command_response(self.process_output(output_ + build_error))
             else:
                 return command_error("Already started")
         run(host=host, port=getport())
