@@ -59,6 +59,8 @@ class BaseRunner:
                     build_error = "\nREPLTALK_BUILD_ERROR\n"
                 else:
                     build_error = ""
+                print("Build Error:")
+                print(build_error)
 
                 if len(error_) > 0:
                     return command_response(self.process_output(output_ + error_ + build_error))
