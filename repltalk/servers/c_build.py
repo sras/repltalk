@@ -17,7 +17,7 @@ def make_error_blocks(content):
         lines = content.split("\n")
         for idx, line in enumerate(lines):
             if line == "REPLTALK_BUILD_ERROR":
-                errors.append({'file_name': '', 'line': 0, 'column' : 0, 'text': "" })
+                errors.append({'file_name': '', 'line': 0, 'column' : 0, 'text': content })
                 continue
             try:
                 print(line.split(": ")[0:2])
