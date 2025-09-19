@@ -6,6 +6,9 @@ import json
 
 def make_error_blocks(content):
     print(content)
+    if "\nREPLTALK_BUILD_ERROR\n" in content:
+        content = content.replace("\nREPLTALK_BUILD_ERROR\n" , "")
+
     if len(content) == 0:
         return {"errors" : [], "warnings": []}
     else:
@@ -37,4 +40,4 @@ class ElmRunner(baserunner.BaseRunner):
         return make_error_blocks(content)
 
 def main():
-    ElmRunner("elm", ["make", "--report", "json"] + sys.argv[1:], '0.0.0.0')
+    ElmRunner(["elm", "make", "--report", "json"] + sys.argv[1:], '0.0.0.0')
